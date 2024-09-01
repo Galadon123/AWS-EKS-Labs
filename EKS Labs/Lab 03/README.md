@@ -147,7 +147,7 @@ Here is our expected resource-map of the VPC:
 
 Wait till the status of the node group is `Active`.
 
-## Step 3: pdate kubeconfig to Connect to Your Cluster
+## Step 3: Update kubeconfig to connect to your cluster
 
 Open terminal on your local machine and do the following:
 
