@@ -332,7 +332,7 @@ Open terminal on your local machine and do the following:
        type: LoadBalancer
        ports:
        - port: 80
-         targetPort: 5000
+         targetPort: 5001
        selector:
          app: flask-app
      ```
@@ -360,12 +360,12 @@ Open terminal on your local machine and do the following:
 
     - The EXTERNAL-IP field will show the DNS name of the Classic Load Balancer.
 
-   - Paste the URL into your web browser to access the Flask application.
+   - Copy and Paste the URL into your web browser to access the Flask application.
 
       ```sh
       http://a535c28b241a042849b91065c6a53545-64277239.ap-southeast-1.elb.amazonaws.com/
       ```
-   - You should see the flask-app UI.
+   - You should see the flask application.
 
       ![](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/image-9.png)
 
