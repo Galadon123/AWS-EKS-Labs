@@ -1,3 +1,5 @@
+# EKS with AWS Load Balancers: Classic Load Balancer
+
 In this lab we will set up an Amazon EKS cluster with AWS Load Balancers (Classic & Network Load Balancers), deploy a Flask application, and test the deployment.
 
 ## **Table of Contents**
@@ -7,13 +9,13 @@ In this lab we will set up an Amazon EKS cluster with AWS Load Balancers (Classi
 4. **Expose the Flask Application Using AWS Load Balancers**
 5. **Test the Deployment**
 
-## Overall architecture
+## Overall Architecture
 
-![](./images/eks-lb-6.drawio.svg)
+![](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/eks-lb-6.drawio.svg)
 
 ---
 
-## Prerequisites
+## Prerequisite
 
 **1. Install `eksctl` (if not already installed):**
 
@@ -23,7 +25,7 @@ In this lab we will set up an Amazon EKS cluster with AWS Load Balancers (Classi
   curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
   ```
 
-- Move eksctl to /usr/local/bin
+- Move eksctl to `/usr/local/bin`
 
   ```sh
   sudo mv /tmp/eksctl /usr/local/bin
@@ -34,7 +36,7 @@ In this lab we will set up an Amazon EKS cluster with AWS Load Balancers (Classi
   ```sh
   eksctl version
   ```
-  ![](./images/image.png)
+  ![](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/image.png)
 
 **2. Install `kubectl` (if not already installed):**
 
@@ -43,14 +45,10 @@ In this lab we will set up an Amazon EKS cluster with AWS Load Balancers (Classi
   ```sh
   curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
   ```
-- Make the Binary Executable
+- Make the Binary Executable and Move the kubectl binary to `/usr/local/bin`
 
   ```sh
   chmod +x kubectl
-  ```
-- Move the kubectl binary to `/usr/local/bin`
-
-  ```sh
   sudo mv kubectl /usr/local/bin/
   ```
 
@@ -59,7 +57,7 @@ In this lab we will set up an Amazon EKS cluster with AWS Load Balancers (Classi
   ```sh
   kubectl version --client
   ```
-  ![](./images/image-1.png)
+  ![](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/image-1.png)
 
 **3. Install `aws cli` (if not already installed) and configure aws:**
 
@@ -99,7 +97,7 @@ In this lab we will set up an Amazon EKS cluster with AWS Load Balancers (Classi
   ```
   You will be prompted to enter your AWS Access Key ID, Secret Access Key, default region, and output format.
 
-  ![alt text](./images/image-2.png)
+  ![](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/image-2.png)
 
 # Step by step guide
 
@@ -123,18 +121,18 @@ In this lab we will set up an Amazon EKS cluster with AWS Load Balancers (Classi
    - **Zones**: Availability zones to be used (`ap-southeast-1a`, `ap-southeast-1b`).
    - **Without Node Group**: Creates the cluster without any associated node groups.
 
-   ![alt text](./images/image-3.png)
+   ![](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/image-3.png)
 
 2. **Monitor the Creation:**
 
    - The command will initiate the creation of the necessary VPC components, such as subnets, route tables, and NAT gateways, along with the EKS control plane. It may take a few minutes `(8-10 minutes)` to complete.
    - If the creation is successful, you will see messages indicating that the cluster has been successfully created.
 
-   ![alt text](./images/image-4.png)
+   ![](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/image-4.png)
 
    - Go to the AWS management console, check out the created resources
 
-   ![alt text](./images/image-5.png)
+   ![](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/image-5.png)
 
 
 
@@ -142,36 +140,42 @@ In this lab we will set up an Amazon EKS cluster with AWS Load Balancers (Classi
 
 1. **Navigate to the Amazon EKS Console:**
 
-   - Open the Amazon EKS Console and select your cluster (`my-cluster-1`).
+   - Open the Amazon EKS Console and select your cluster (`demo-cluster-1`).
 
-   ![alt text](./images/image-6.png)
+   ![](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/image-6.png)
 
 2. **Add a Node Group:**
 
-   - In the menu, click on the **compute**, then **Node Groups** and then **Add Node Group**.
+   - In the menu, click on the **compute** and then **Add Node Group**.
 
-   ![alt text](./images/image-7.png)
+   ![](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/image-7.png)
 
 3. **Configure the Node Group:**
 
    - **Name**: Give your node group a name (e.g., `my-nodegroup`).
-   - **Node IAM role**: Create or select an IAM role with `AmazonEKSWorkerNodePolicy`, `AmazonEC2ContainerRegistryReadOnly`, and `AmazonEKS_CNI_Policy` attached.
+   - **Node IAM role**: Create or select an IAM role with 
+      - `AmazonEKSWorkerNodePolicy`
+      - `AmazonEC2ContainerRegistryReadOnly`
+      - `AmazonEKS_CNI_Policy`
+      - `AmazonSSMManagedInstanceCore`
+    
+      attached.
 
-    ![alt text](./images/image-18.png)
+    ![](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/image-18.png)
 
-   - **Subnets**: Choose the subnets created by `eksctl`.
+   - **Subnets**: Choose the subnets created by `eksctl`. Here, we will create the nodegroup in the private subnet. Thats why we have to select only the private subnets.
 
-   ![alt text](./images/image-19.png)
+   ![](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/image-19.png)
 
    - **AMI type:** `Amazon Linux 2(al2_x86_64)`
 
-   - **Instance type**: Choose an instance type (e.g., `t3.medium`).
+   - **Instance type**: Choose an instance type (e.g., `t3.medium`). according to your need.
 
-   ![alt text](./images/image-20.png)
+   ![](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/image-20.png)
 
    - **Scaling configuration:** Set the desired, minimum, and maximum number of nodes.
 
-   ![alt text](./images/image-21.png)
+   ![](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/image-21.png)
 
 4. **Launch the Node Group:**
    - Click **Create** to launch the node group. This will start the creation of the EC2 instances that will act as worker nodes for your EKS cluster.
@@ -179,7 +183,7 @@ In this lab we will set up an Amazon EKS cluster with AWS Load Balancers (Classi
 5. **Wait for Node Group Creation:**
    - Once created, the node group will automatically join the cluster. You can verify this by checking the Nodes section in the EKS Console
 
-   ![alt text](./images/image-10.png)
+   ![](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/image-10.png)
 
 
 ## Step 04: Update kubeconfig to connect to your cluster
@@ -191,14 +195,14 @@ Open terminal on your local machine and do the following:
   ```sh
   aws eks --region ap-southeast-1 update-kubeconfig --name demo-cluster-1
   ```
-  ![alt text](./images/image-16.png)
+  ![](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/image-16.png)
 
 - Confirm the connection:
 
   ```sh
   kubectl get nodes
   ```
-  ![alt text](./images/image-17.png)
+  ![](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/image-17.png)
 
   You should see the worker nodes in a "Ready" state.
   
@@ -280,7 +284,7 @@ Open terminal on your local machine and do the following:
     make all
     ```
 
-    ![alt text](./images/image-12.png) 
+    ![](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/image-12.png) 
 
 5. Create a kubernetes deployment YAML file (`flask-deployment.yaml`):
     ```yaml
@@ -312,7 +316,7 @@ Open terminal on your local machine and do the following:
     ```bash
     kubectl apply -f flask-deployment.yaml
     ```
-    ![alt text](./images/image-14.png)
+    ![](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/image-14.png)
 
 ## Step 04: Expose the Flask Application Using AWS Load Balancers (Classic Load Balancer)
 
@@ -343,7 +347,7 @@ Open terminal on your local machine and do the following:
 
 - Go to EC2 section and in the left bar search for `load balancers`. You will see the created load-balancer service.
 
-  ![alt text](./images/image-15.png)
+  ![](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/image-15.png)
 
 ## Step 05: Test the Deployment
 
@@ -353,7 +357,7 @@ Open terminal on your local machine and do the following:
       ```sh
       kubectl get svc
       ```
-      ![alt text](./images/image-13.png)
+      ![](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/image-13.png)
 
     - The EXTERNAL-IP field will show the DNS name of the Classic Load Balancer.
 
@@ -364,7 +368,7 @@ Open terminal on your local machine and do the following:
       ```
    - You should see the flask-app UI.
 
-      ![alt text](./images/image-9.png)
+      ![](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/image-9.png)
 
 2. **Verify Load Balancer Functionality:**
    - Test the load balancing by refreshing the page multiple times. The request should be distributed across the Flask application replicas.
