@@ -15,7 +15,7 @@ In this lab we will set up an Amazon EKS cluster with AWS Load Balancers (Classi
 
 ---
 
-## Prerequisite
+## Prerequisites
 
 **1. Install `eksctl` (if not already installed):**
 
@@ -59,7 +59,7 @@ In this lab we will set up an Amazon EKS cluster with AWS Load Balancers (Classi
   ```
   ![](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/image-1.png)
 
-**3. Install `aws cli` (if not already installed) and configure aws:**
+**3. Install `aws cli` (if not already installed):**
 
 - Download the AWS CLI Installer
 
@@ -79,23 +79,19 @@ In this lab we will set up an Amazon EKS cluster with AWS Load Balancers (Classi
   sudo apt-get install unzip   # For Debian/Ubuntu
   ```
 
-- Run the Installer
+- Run the Installer and Verify the Installation
 
   ```bash
   sudo ./aws/install
-  ```
-
-- Verify the Installation
-
-  ```bash
   aws --version
   ```
-- Configure the AWS CLI
+**4. Configure the AWS CLI**
+
+- Configure AWS CLI. You will be prompted to enter your AWS Access Key ID, Secret Access Key, default region, and output format.
 
   ```sh
   aws configure
   ```
-  You will be prompted to enter your AWS Access Key ID, Secret Access Key, default region, and output format.
 
   ![](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/image-2.png)
 
@@ -134,6 +130,10 @@ In this lab we will set up an Amazon EKS cluster with AWS Load Balancers (Classi
 
    ![](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/image-5.png)
 
+   - Go to `EKS > Clusters` and check the created cluster
+
+   ![](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/image-6.png)
+
 
 
 ## Step 02: Create a Node Group Using the AWS Console
@@ -141,8 +141,6 @@ In this lab we will set up an Amazon EKS cluster with AWS Load Balancers (Classi
 1. **Navigate to the Amazon EKS Console:**
 
    - Open the Amazon EKS Console and select your cluster (`demo-cluster-1`).
-
-   ![](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/image-6.png)
 
 2. **Add a Node Group:**
 
@@ -153,7 +151,8 @@ In this lab we will set up an Amazon EKS cluster with AWS Load Balancers (Classi
 3. **Configure the Node Group:**
 
    - **Name**: Give your node group a name (e.g., `my-nodegroup`).
-   - **Node IAM role**: Create or select an IAM role with 
+   - **Node IAM role**: Create an IAM role with
+
       - `AmazonEKSWorkerNodePolicy`
       - `AmazonEC2ContainerRegistryReadOnly`
       - `AmazonEKS_CNI_Policy`
@@ -309,7 +308,7 @@ Open terminal on your local machine and do the following:
             - containerPort: 5000
     ```
 
-    Update the image according to your docker image that your created earlier.
+    Update the image according to your docker image that you created earlier. You can also use this image as well.
 
 6. Deploy the application:
 
