@@ -3,7 +3,7 @@
 In this lab, you will learn how to set up monitoring for an Amazon EKS (Elastic Kubernetes Service) cluster using Prometheus and Grafana. This process will enable you to track metrics, visualize data, and set up alerts, ensuring optimal performance and health of your Kubernetes clusters on AWS.
 
 
-## Amazon EKS, Grafana and Prometheus**
+## Amazon EKS, Grafana and Prometheus
 
 **Amazon EKS** (Elastic Kubernetes Service) is a managed Kubernetes service that simplifies the process of deploying, managing, and scaling containerized applications using Kubernetes on AWS. It automates the complexity of cluster management, allowing developers to focus on building applications.
 
