@@ -11,7 +11,7 @@ In this lab, we will set up an Amazon EKS (Elastic Kubernetes Service) cluster a
 
 ## Overall Architecture
 
-![](./images/nlb.svg)
+![](https://raw.githubusercontent.com/Minhaz00/AWS-EKS-Labs/c40c2685db78b814e27c766b695ae358a5a97313/EKS%20Labs/Lab%2005/images/nlb.svg)
 
 The Network Load Balancer (NLB) distributes TCP/UDP traffic across multiple targets, such as Apache servers in an EKS cluster, ensuring high availability and low latency. It operates at Layer 4, providing static IP addresses, automatic scaling, and health checks to route traffic only to healthy instances. Ideal for high-performance applications needing fixed IPs and secure private connectivity, the NLB helps maintain consistent traffic distribution and scalability.
 
@@ -272,7 +272,7 @@ Open a terminal on your local machine and do the following:
     make all
     ```
 
-    ![](./images/2.png)
+    ![](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2005/images/2.png?raw=true)
 
 4. **Create a Kubernetes Deployment YAML File `apache-deployment.yaml`:**
 
@@ -344,7 +344,7 @@ Open a terminal on your local machine and do the following:
     kubectl get services
     ```
 
-   ![](./images/3.png)
+   ![](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2005/images/3.png?raw=true)
 
 ## Step 06: Test the Deployment
 
@@ -356,7 +356,7 @@ Open a terminal on your local machine and do the following:
    http://<external-ip-or-dns-name>
    ```
 
-   ![](./images/4.png)
+   ![](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2005/images/4.png?raw=true)
 
 2. **Clean Up**
 
