@@ -305,7 +305,7 @@ Open terminal on your local machine and do the following:
           - name: flask-container
             image: konami98/flask-app:latest
             ports:
-            - containerPort: 5000
+            - containerPort: 5001
     ```
 
     Update the image according to your docker image that you created earlier. You can also use this image as well.
