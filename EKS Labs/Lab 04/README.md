@@ -374,4 +374,4 @@ Open terminal on your local machine and do the following:
 
 ---
 
-So, We have successfully created the EKS cluster and node group and deployed a Flask application on the EKS cluster and exposing it using both Classic and Network Load Balancers.
+So, We have successfully created the EKS cluster and node group and deployed a Flask application on the EKS cluster and exposing it using Classic Load Balancer.
