@@ -2,13 +2,13 @@
 
 Amazon Elastic Kubernetes Service (EKS) provides a fully managed Kubernetes environment, integrating seamlessly with AWS services. This guide walks you through setting up an EKS cluster and adding a node group using `eksctl`.
 
-![alt text](./images/template.png)
+![alt text](https://raw.githubusercontent.com/AhnafNabil/AWS-EKS-Labs/main/EKS%20Labs/Lab%2002/images/template.png)
 
 ## What is eksctl?
 
 `eksctl` is a simple command-line tool for creating and managing Kubernetes clusters on Amazon EKS. It is an open-source project developed and maintained by Weaveworks. The primary goal of `eksctl` is to provide an automated and streamlined way to deploy and manage EKS clusters, reducing the complexity and manual effort involved in the process. With `eksctl`, you can easily create and manage EKS clusters, node groups, and other related resources using simple commands.
 
-![alt text](./images/image-2.png)
+![alt text](https://raw.githubusercontent.com/AhnafNabil/AWS-EKS-Labs/main/EKS%20Labs/Lab%2002/images/image-2.png)
 
 ## Prerequisites
 
@@ -28,11 +28,11 @@ aws configure
 
 This command sets up your AWS CLI with the necessary credentials, region, and output format.
 
-![alt text](./images/image.png)
+![alt text](https://raw.githubusercontent.com/AhnafNabil/AWS-EKS-Labs/main/EKS%20Labs/Lab%2002/images/image.png)
 
 You will find the `AWS Access key` and `AWS Seceret Access key` on Lab description page,where you generated the credentials.
 
-![alt text](./images/image-1.png)
+![alt text](https://raw.githubusercontent.com/AhnafNabil/AWS-EKS-Labs/main/EKS%20Labs/Lab%2002/images/image-1.png)
 
 ## Installing `kubectl`
 
@@ -55,7 +55,7 @@ Verify the Installation:
 kubectl version --client
 ```
 
-![alt text](./images/image-3.png)
+![alt text](https://raw.githubusercontent.com/AhnafNabil/AWS-EKS-Labs/main/EKS%20Labs/Lab%2002/images/image-3.png)
 
 ## Installing `eksctl`
 
@@ -74,7 +74,7 @@ eksctl version
 
 This should display the version of `eksctl` installed on your system.
 
-![alt text](./images/image-4.png)
+![alt text](https://raw.githubusercontent.com/AhnafNabil/AWS-EKS-Labs/main/EKS%20Labs/Lab%2002/images/image-4.png)
 
 ## Step 1: Create an EKS Cluster
 
@@ -114,15 +114,15 @@ eksctl get cluster
 
 This command lists all existing EKS clusters, providing details such as cluster names, regions, and statuses. It will take approximately 10 to 20 minutes to create the cluster.
 
-![alt text](./images/image-10.png)
+![alt text](https://raw.githubusercontent.com/AhnafNabil/AWS-EKS-Labs/main/EKS%20Labs/Lab%2002/images/image-10.png)
 
 You can also verify that the cluster has been created successfully by using the AWS Console. Navigate to the `CloudFormation` section to check the status of your cluster's stack and ensure it shows as successfully created.
 
-![alt text](./images/image-5.png)
+![alt text](https://raw.githubusercontent.com/AhnafNabil/AWS-EKS-Labs/main/EKS%20Labs/Lab%2002/images/image-5.png)
 
 You can also view the resources of the cluster that has been created.
 
-![alt text](./images/image-6.png)
+![alt text](https://raw.githubusercontent.com/AhnafNabil/AWS-EKS-Labs/main/EKS%20Labs/Lab%2002/images/image-6.png)
 
 ## Step 2: Add a Node Group
 
@@ -172,11 +172,11 @@ This command creates a managed node group named `poridhi-nodes` in the `poridhi-
 
 You can verify that the nodegroup has been created successfully by using the AWS Console. Navigate to the `CloudFormation` section to check the status of your nodegroup's stack and ensure it shows as successfully created.
 
-![alt text](./images/image-7.png)
+![alt text](https://raw.githubusercontent.com/AhnafNabil/AWS-EKS-Labs/main/EKS%20Labs/Lab%2002/images/image-7.png)
 
 You can also view the resources of the nodegroup that has been created.
 
-![alt text](./images/image-8.png)
+![alt text](https://raw.githubusercontent.com/AhnafNabil/AWS-EKS-Labs/main/EKS%20Labs/Lab%2002/images/image-8.png)
 
 ## Step 3: Configure `kubectl`
 
@@ -204,7 +204,7 @@ kubectl get nodes
 
 You should see a list of nodes from your node group, confirming that the EKS cluster and node group are successfully set up.
 
-![alt text](./images/image-9.png)
+![alt text](https://raw.githubusercontent.com/AhnafNabil/AWS-EKS-Labs/main/EKS%20Labs/Lab%2002/images/image-9.png)
 
 ## Conclusion
 
