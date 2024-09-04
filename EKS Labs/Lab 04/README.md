@@ -15,6 +15,18 @@ In this lab we will set up an Amazon EKS cluster with AWS Load Balancers (Classi
 
 ---
 
+## What is Classic Load Balancer(CLB)?
+
+A Classic Load Balancer (CLB) is a type of load balancer provided by Amazon Web Services (AWS) that distributes incoming traffic across multiple instances of an application. CLB supports both Layer 4 (transport layer) and Layer 7 (application layer) routing. CLB can distribute traffic across instances in multiple Availability Zones. CLB can be associated with security groups to control incoming traffic.
+
+### How CLB Works
+
+- The client sends a request to the load balancer.
+- The load balancer receives the request and checks the listener configuration to determine which target group to route the traffic to.
+- The load balancer selects a healthy instance from the target group and routes the traffic to that instance.
+- The instance processes the request and returns a response to the load balancer.
+- The load balancer returns the response to the client.
+
 ## Prerequisites
 
 **1. Install `eksctl` (if not already installed):**
@@ -151,14 +163,12 @@ In this lab we will set up an Amazon EKS cluster with AWS Load Balancers (Classi
 3. **Configure the Node Group:**
 
    - **Name**: Give your node group a name (e.g., `my-nodegroup`).
-   - **Node IAM role**: Create an IAM role with
+   - **Node IAM role**: Create an IAM role with these policies:
 
       - `AmazonEKSWorkerNodePolicy`
       - `AmazonEC2ContainerRegistryReadOnly`
       - `AmazonEKS_CNI_Policy`
       - `AmazonSSMManagedInstanceCore`
-    
-      attached.
 
     ![](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/image-18.png)
 
@@ -308,7 +318,7 @@ Open terminal on your local machine and do the following:
             - containerPort: 5001
     ```
 
-    Update the image according to your docker image that you created earlier. You can also use this image as well.
+    **NOTE:** Update the *image* according to your docker image that you created earlier. You can also use this image as well.
 
 6. Deploy the application:
 
