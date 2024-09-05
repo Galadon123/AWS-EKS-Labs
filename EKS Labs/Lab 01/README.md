@@ -8,7 +8,7 @@ In this lab, we will:
 Set up the necessary AWS infrastructure, including IAM roles, VPC, subnets, and security groups.
 Create an Amazon EKS cluster with a Node Group.
 
-![alt text](./images/image.png)
+![alt text](https://raw.githubusercontent.com/AhnafNabil/AWS-EKS-Labs/main/EKS%20Labs/Lab%2001/images/image.png)
 
 ## Amazon EKS Cluster
 
@@ -35,11 +35,11 @@ aws configure
 
 This command sets up your AWS CLI with the necessary credentials, region, and output format.
 
-![alt text](./images/image-7.png)
+![alt text](https://raw.githubusercontent.com/AhnafNabil/AWS-EKS-Labs/main/EKS%20Labs/Lab%2001/images/image-7.png)
 
 You will find the `AWS Access key` and `AWS Seceret Access key` on Lab description page,where you generated the credentials.
 
-![alt text](./images/image-8.png)
+![alt text](https://raw.githubusercontent.com/AhnafNabil/AWS-EKS-Labs/main/EKS%20Labs/Lab%2001/images/image-8.png)
 
 ## Installing `kubectl`
 
@@ -62,7 +62,7 @@ Verify the Installation:
 kubectl version --client
 ```
 
-![alt text](./images/image-9.png)
+![alt text](https://raw.githubusercontent.com/AhnafNabil/AWS-EKS-Labs/main/EKS%20Labs/Lab%2001/images/image-9.png)
 
 ## Step 1: Setup VPC for EKS Cluster
 
@@ -73,7 +73,7 @@ kubectl version --client
 3. Enter a name, e.g., `my-vpc`.
 4. Set CIDR block (e.g., `10.0.0.0/16`).
 
-    ![alt text](./images/image-1.png)
+    ![alt text](https://raw.githubusercontent.com/AhnafNabil/AWS-EKS-Labs/main/EKS%20Labs/Lab%2001/images/image-1.png)
 
 ### Create subnets
 1. Select VPC.
@@ -83,7 +83,7 @@ kubectl version --client
     - CIDR: `10.0.1.0/24`
     - Availability zone: `ap-southeast-1a`
 
-    ![alt text](./images/image-2.png)
+    ![alt text](https://raw.githubusercontent.com/AhnafNabil/AWS-EKS-Labs/main/EKS%20Labs/Lab%2001/images/image-2.png)
 
     Similarly create another one:    
     - Name: `my-subnet-2`
@@ -92,7 +92,7 @@ kubectl version --client
 
 3. For each subnet go to **Edit subnet settings** and enable `Auto-assign IP`.
 
-    ![alt text](./images/image-3.png)
+    ![alt text](https://raw.githubusercontent.com/AhnafNabil/AWS-EKS-Labs/main/EKS%20Labs/Lab%2001/images/image-3.png)
 
 
 
@@ -103,11 +103,11 @@ kubectl version --client
    - Associate the public subnets with a route table
    - Add route route to the internet gateway.
    
-    ![alt text](./images/image-4.png)
+    ![alt text](https://raw.githubusercontent.com/AhnafNabil/AWS-EKS-Labs/main/EKS%20Labs/Lab%2001/images/image-4.png)
 
 Here is our expected resource-map of the VPC:
 
-![alt text](./images/image-5.png)
+![alt text](https://raw.githubusercontent.com/AhnafNabil/AWS-EKS-Labs/main/EKS%20Labs/Lab%2001/images/image-5.png)
 
 
 
@@ -131,7 +131,7 @@ Here is our expected resource-map of the VPC:
    - `AmazonEKS_CNI_Policy`
 4. Name the role **`eks-worker-node-role`** and click **Create Role**.
 
-![alt text](./images/image-6.png)
+![alt text](https://raw.githubusercontent.com/AhnafNabil/AWS-EKS-Labs/main/EKS%20Labs/Lab%2001/images/image-6.png)
 
 ### Create the EKS Cluster
 
@@ -140,17 +140,17 @@ Here is our expected resource-map of the VPC:
 3. Select the **Version** (latest stable version).
 4. Choose the **Role name** created for the EKS cluster (`eks-cluster-role`).
 
-    ![alt text](./images/image-10.png)
+    ![alt text](https://raw.githubusercontent.com/AhnafNabil/AWS-EKS-Labs/main/EKS%20Labs/Lab%2001/images/image-10.png)
 
 5. Select **VPC** and **Subnets** created in the previous step.
 6. Leave the `default` security group.
 
-    ![alt text](./images/image-11.png)
+    ![alt text](https://raw.githubusercontent.com/AhnafNabil/AWS-EKS-Labs/main/EKS%20Labs/Lab%2001/images/image-11.png)
 
 7. Since I don't have any specific requirements at the moment, I'm choosing to skip this step and proceed by clicking the `Next` button.
 8. Click **Create**.
 
-    ![alt text](./images/image-12.png)
+    ![alt text](https://raw.githubusercontent.com/AhnafNabil/AWS-EKS-Labs/main/EKS%20Labs/Lab%2001/images/image-12.png)
 
     **Note:** It can take 10-20 minutes for the cluster to be created. Wait till the status is `Active`.
 
@@ -161,24 +161,24 @@ Here is our expected resource-map of the VPC:
 2. Enter a **Node group name** (e.g., `eks-node-group`).
 3. Select the **Node IAM role** created earlier (`eks-worker-node-role`).
 
-    ![alt text](./images/image-13.png)
+    ![alt text](https://raw.githubusercontent.com/AhnafNabil/AWS-EKS-Labs/main/EKS%20Labs/Lab%2001/images/image-13.png)
 
 4. Configure the **Compute and Scaling** settings:
    - **Instance Type**: Choose your desired instance type (e.g., `t2.small`).
 
-    ![alt text](./images/image-14.png)
+    ![alt text](https://raw.githubusercontent.com/AhnafNabil/AWS-EKS-Labs/main/EKS%20Labs/Lab%2001/images/image-14.png)
 
    - **Scaling configuration**: Set the desired, minimum, and maximum number of nodes.
 
-    ![alt text](./images/image-15.png)
+    ![alt text](https://raw.githubusercontent.com/AhnafNabil/AWS-EKS-Labs/main/EKS%20Labs/Lab%2001/images/image-15.png)
 
 5. Select **Subnets** for the worker nodes.
 
-    ![alt text](./images/image-16.png)
+    ![alt text](https://raw.githubusercontent.com/AhnafNabil/AWS-EKS-Labs/main/EKS%20Labs/Lab%2001/images/image-16.png)
     
 6. Click **Create**.
 
-![alt text](./images/image-17.png)
+![alt text](https://raw.githubusercontent.com/AhnafNabil/AWS-EKS-Labs/main/EKS%20Labs/Lab%2001/images/image-17.png)
 
 Wait till the status of the node group is `Active`.
 
@@ -208,7 +208,7 @@ kubectl get nodes
 
 You should see a list of nodes from your node group, confirming that the EKS cluster and node group are successfully set up.
 
-![alt text](./images/image-18.png)
+![alt text](https://raw.githubusercontent.com/AhnafNabil/AWS-EKS-Labs/main/EKS%20Labs/Lab%2001/images/image-18.png)
 
 ## Conclusion
 
