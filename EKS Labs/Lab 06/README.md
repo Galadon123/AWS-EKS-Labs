@@ -161,43 +161,9 @@ This steps automatically creates necessary VPC, Subnet etc. Here's the resource-
 
 ## Step 6: Create NodeGroup Using `eksctl`
 
-After creating the EKS cluster, you can add a node group that will consist of EC2 instances acting as worker nodes.
+After creating the EKS cluster, you can add a node group that will consist of EC2 instances acting as worker nodes. We will follow the following step in our lab.
 
-Run the following command to create a node group:
-
-```bash
-eksctl create nodegroup \
-  --cluster=<cluster-name> \
-  --name=<nodegroup-name> \
-  --region=<aws-region> \
-  --node-type=<instance-type> \
-  --managed \
-  --nodes=<desired-node-count> \
-  --nodes-min=<minimum-node-count> \
-  --nodes-max=<maximum-node-count>
-```
-
-Replace the following placeholders with your specific values:
-
-
-- **`<cluster-name>`**: Name of your existing EKS cluster.
-
-- **`<nodegroup-name>`**: Name to assign to the node group.
-
-- **`<aws-region>`**: AWS region where your EKS cluster is located.
-
-- **`<instance-type>`**: EC2 instance type for the nodes in the node group.
-
-- **`<desired-node-count>`**: Number of nodes to start with in the node group.
-
-- **`<minimum-node-count>`**: Minimum number of nodes to maintain in the node group (used for auto-scaling).
-
-- **`<maximum-node-count>`**: Maximum number of nodes that can be scaled up in the node group (used for auto-scaling).
-
-
-### We will follow the following step in our lab
-
-1. We will use the following commands to create NodeGroup
+1. Use the command below to create NodeGroup
 
     ```bash
     eksctl create nodegroup \
