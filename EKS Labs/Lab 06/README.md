@@ -159,45 +159,73 @@ This steps automatically creates necessary VPC, Subnet etc. Here's the resource-
 
 
 
-## Step 6: Create NodeGroup using AWS Console
+## Step 6: Create NodeGroup Using `eksctl`
 
-We will use AWS Management Console to create the NodeGroup for our EKS cluster, follow these steps:
+After creating the EKS cluster, you can add a node group that will consist of EC2 instances acting as worker nodes.
 
-1. **Navigate to the Amazon EKS Console:**
-   - Log in to the AWS Management Console.
-   - Go to the **Amazon EKS** service by searching for "EKS" in the AWS services search bar.
+Run the following command to create a node group:
 
-2. **Select Your EKS Cluster:**
-   - In the EKS dashboard, select the EKS cluster you created (e.g., `poridhi-cluster`).
+```bash
+eksctl create nodegroup \
+  --cluster=<cluster-name> \
+  --name=<nodegroup-name> \
+  --region=<aws-region> \
+  --node-type=<instance-type> \
+  --managed \
+  --nodes=<desired-node-count> \
+  --nodes-min=<minimum-node-count> \
+  --nodes-max=<maximum-node-count>
+```
 
-3. **Create a Node Group:**
-   - In the cluster details page, click on the **Compute** tab.
-   - Click on **Add Node Group**.
-   
-4. **Configure the Node Group:**
-   - **Name:** Enter a name for your Node Group (e.g., `poridhi-nodes`).
-   - **Node IAM Role:** Choose or create an IAM role with the necessary permissions for the nodes. If you don’t have one, you can create a new one by clicking on **Create new role**.
-   - **Subnets:** Select the subnets in which you want your nodes to be launched.
-   - **Instance Types:** Choose the EC2 instance type for the nodes (e.g., `t3.medium`).
-   - **Capacity Type:** Select whether you want On-Demand or Spot Instances.
-   - **Scaling Configuration:** Set the desired, minimum, and maximum number of nodes for your Node Group.
+Replace the following placeholders with your specific values:
 
-5. **Review and Create:**
-   - Review your Node Group configuration.
-   - Click **Create** to start provisioning the Node Group.
 
-6. **Wait for Completion:**
-   - It might take a few minutes for the Node Group to be fully created. You can monitor the progress in the EKS Console. The status of the Node Group will be updated to 'active' once it is fully created.
+- **`<cluster-name>`**: Name of your existing EKS cluster.
 
-   ![alt text](./images/image-9.png)
+- **`<nodegroup-name>`**: Name to assign to the node group.
 
-7. Update the kubeconfig file to interact with the EKS cluster:
+- **`<aws-region>`**: AWS region where your EKS cluster is located.
+
+- **`<instance-type>`**: EC2 instance type for the nodes in the node group.
+
+- **`<desired-node-count>`**: Number of nodes to start with in the node group.
+
+- **`<minimum-node-count>`**: Minimum number of nodes to maintain in the node group (used for auto-scaling).
+
+- **`<maximum-node-count>`**: Maximum number of nodes that can be scaled up in the node group (used for auto-scaling).
+
+
+### We will follow the following step in our lab
+
+1. We will use the following commands to create NodeGroup
+
+    ```bash
+    eksctl create nodegroup \
+    --cluster=poridhi-cluster \
+    --name=poridhi-nodes \
+    --region=ap-southeast-1 \
+    --node-type=t3.medium \
+    --managed \
+    --nodes=2 \
+    --nodes-min=1 \
+    --nodes-max=2
+    ```
+
+    This command creates a managed node group named `poridhi-nodes` in the `poridhi-cluster` Amazon EKS cluster, located in the `ap-southeast-1` AWS region. The node group uses `t3.medium` EC2 instances, with a desired number of 2 nodes. The node group will automatically scale between a minimum of 1 node and a maximum of 2 nodes based on demand.
+
+2. Wait for Completion
+
+    It might take a few minutes for the Node Group to be fully created. You can monitor the progress in the EKS Console. The status of the Node Group will be updated to 'active' once it is fully created.
+
+    ![alt text](./images/image-9.png)
+
+3. Update the kubeconfig file to interact with the EKS cluster:
 
     ```bash
     aws eks update-kubeconfig --name poridhi-cluster --region ap-southeast-1
     ```
 
-8. Confirm the connection to the EKS cluster:
+4. Confirm the connection to the EKS cluster:
 
     ```bash
     kubectl get nodes
