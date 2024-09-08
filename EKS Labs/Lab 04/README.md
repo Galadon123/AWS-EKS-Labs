@@ -203,51 +203,6 @@ It might take a few minutes for the Node Group to be fully created. You can moni
 ![](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/image-10.png)
 
 
-<!-- **1. Navigate to the Amazon EKS Console:**
-
-- Open the Amazon EKS Console and select your cluster (`demo-cluster-1`).
-
-**2. Add a Node Group:**
-
-- In the menu, click on the **compute** and then **Add Node Group**.
-
-  ![](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/image-7.png)
-
-**3. Configure the Node Group:**
-
-- **Name**: Give your node group a name (e.g., `eks-node-group`).
-- **Node IAM role**: Create an IAM role with these policies:
-
-  - `AmazonEKSWorkerNodePolicy`
-  - `AmazonEC2ContainerRegistryReadOnly`
-  - `AmazonEKS_CNI_Policy`
-  - `AmazonSSMManagedInstanceCore`
-
-  ![](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/image-18.png)
-
-- **Subnets**: Choose the subnets created by `eksctl`. Here, we will create the nodegroup in the private subnet. Thats why we have to select only the private subnets.
-
-  ![](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/image-19.png)
-
-- **AMI type:** `Amazon Linux 2(al2_x86_64)`
-
-- **Instance type**: Choose an instance type (e.g., `t3.medium`). according to your need.
-
-  ![](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/image-20.png)
-
-- **Scaling configuration:** Set the desired, minimum, and maximum number of nodes.
-
-  ![](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/image-21.png)
-
-**4. Launch the Node Group:**
-- Click **Create** to launch the node group. This will start the creation of the EC2 instances that will act as worker nodes for your EKS cluster.
-
-**5. Wait for Node Group Creation:**
-- Once created, the node group will automatically join the cluster. You can verify this by checking the Nodes section in the EKS Console
-
-  ![](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/image-10.png) -->
-
-
 ## Step 03: Update kubeconfig to connect to your cluster
 
 Open terminal on your local machine and do the following:
