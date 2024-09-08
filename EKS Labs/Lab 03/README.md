@@ -18,12 +18,12 @@ In this lab, we will:
 Set up the necessary AWS infrastructure, including IAM roles, VPC, subnets, and security groups.
 Deploy an Amazon EKS cluster and configure it for your application.
 
-![alt text](./images/image-16.png)
+![alt text](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2003/images/image-16.png?raw=true)
 
 Deploy the Pac-Man application to the EKS cluster using Kubernetes manifests.
 Expose the application using Kubernetes services.
 
-![alt text](./images/image-17.png)
+![alt text](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2003/images/image-17.png?raw=true)
 
 Scale the application to handle varying traffic loads.
 Test and verify that the application is working as expected.
@@ -40,7 +40,7 @@ Test and verify that the application is working as expected.
 3. Enter a name, e.g., `my-vpc`.
 4. Set CIDR block (e.g., `10.0.0.0/16`).
 
-    ![alt text](./images/image.png)
+    ![alt text](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2003/images/image.png?raw=true)
 
 ### Create subnets
 1. Select VPC.
@@ -50,7 +50,7 @@ Test and verify that the application is working as expected.
     - CIDR: `10.0.1.0/24`
     - Availability zone: `ap-southeast-1a`
 
-    ![alt text](./images/image-1.png)
+    ![alt text](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2003/images/image-1.png?raw=true)
 
     Similarly create another one:    
     - Name: `my-subnet-2`
@@ -59,7 +59,7 @@ Test and verify that the application is working as expected.
 
 3. For each subnet go to **Edit subnet settings** and enable `Auto-assign IP`.
 
-    ![alt text](./images/image-3.png)
+    ![alt text](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2003/images/image-3.png?raw=true)
 
 
 
@@ -70,12 +70,12 @@ Test and verify that the application is working as expected.
    - Associate the public subnets with a route table
    - Add route route to the internet gateway.
    
-    ![alt text](./images/image-2.png)
+    ![alt text](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2003/images/image-2.png?raw=true)
 
 
 Here is our expected resource-map of the VPC:
 
-![alt text](./images/image-5.png)
+![alt text](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2003/images/image-5.png?raw=true)
 
 
 
@@ -99,7 +99,7 @@ Here is our expected resource-map of the VPC:
    - `AmazonEKS_CNI_Policy`
 4. Name the role **`eks-worker-node-role`** and click **Create Role**.
 
-![alt text](./images/image-4.png)
+![alt text](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2003/images/image-4.png?raw=true)
 
 
 
@@ -111,16 +111,16 @@ Here is our expected resource-map of the VPC:
 3. Select the **Version** (latest stable version).
 4. Choose the **Role name** created for the EKS cluster (`eks-cluster-role`).
 
-    ![alt text](./images/image-6.png)
+    ![alt text](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2003/images/image-6.png?raw=true)
 
 5. Select **VPC** and **Subnets** created in the previous step.
 6. Leave the `default` security group.
 
-    ![alt text](./images/image-7.png)
+    ![alt text](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2003/images/image-7.png?raw=true)
 
 7. Click **Create**.
 
-    ![alt text](./images/image-8.png)
+    ![alt text](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2003/images/image-8.png?raw=true)
 
     **Note:** It can take a few minutes for the cluster to be created. Wait till the status is `Active`.
 
@@ -134,16 +134,16 @@ Here is our expected resource-map of the VPC:
 4. Configure the **Compute and Scaling** settings:
    - **Instance Type**: Choose your desired instance type (e.g., `t3.medium`).
 
-    ![alt text](./images/image-9.png)
+    ![alt text](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2003/images/image-9.png?raw=true)
 
    - **Scaling configuration**: Set the desired, minimum, and maximum number of nodes.
 
-    ![alt text](./images/image-10.png)
+    ![alt text](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2003/images/image-10.png?raw=true)
 
 5. Select **Subnets** for the worker nodes.
 6. Click **Create**.
 
-![alt text](./images/image-15.png)
+![alt text](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2003/images/image-15.png?raw=true)
 
 Wait till the status of the node group is `Active`.
 
@@ -245,7 +245,7 @@ Check the status of your deployments and service:
 kubectl get all -n pac-man
 ```
 
-![alt text](./images/image-11.png)
+![alt text](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2003/images/image-11.png?raw=true)
 
 
 Note the **EXTERNAL-IP** of the `pacman-app` service. This is the LoadBalancer IP you will use to access the Pac-Man application.
@@ -253,7 +253,7 @@ Note the **EXTERNAL-IP** of the `pacman-app` service. This is the LoadBalancer I
 ### Test the Application
 Open a browser and navigate to the **EXTERNAL-IP** of the `pacman-app` service and Verify that the Pac-Man game is loading and playable.
 
-![alt text](./images/image-12.png)
+![alt text](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2003/images/image-12.png?raw=true)
 
 ## **Step 5: Scale the Kubernetes Web Application**
 
@@ -271,7 +271,7 @@ Open a browser and navigate to the **EXTERNAL-IP** of the `pacman-app` service a
    kubectl get deployments -n pac-man
    ```
 
-    ![alt text](./images/image-13.png)
+    ![alt text](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2003/images/image-13.png?raw=true)
 
 ### Test the Scaled Application
 
@@ -291,7 +291,7 @@ Open a browser and navigate to the **EXTERNAL-IP** of the `pacman-app` service a
    kubectl get deployments -n pac-man
    ```
 
-   ![alt text](./images/image-14.png)
+   ![alt text](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2003/images/image-14.png?raw=true)
 
 ### Final Testing
 
