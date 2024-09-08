@@ -126,13 +126,15 @@ eksctl create cluster \
 --without-nodegroup
 ```
 
+**Explanation:**
+
 - **Name**: Specifies the name of your EKS cluster (`demo-cluster-1`).
 - **Version**: Kubernetes version to use (`1.27`).
 - **Region**: AWS region (`ap-southeast-1`).
 - **Zones**: Availability zones to be used (`ap-southeast-1a`, `ap-southeast-1b`).
 - **Without Node Group**: Creates the cluster without any associated node groups.
 
-![](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/image-3.png)
+  ![](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/image-3.png)
 
 **2. Monitor the Creation:**
 
@@ -154,30 +156,54 @@ eksctl create cluster \
 
 ## Step 02: Create NodeGroup
 
-<!-- After creating the EKS cluster, you can add a node group that will consist of EC2 instances acting as worker nodes. We will follow the following step in our lab.
+After creating the EKS cluster, you can add a node group that will consist of EC2 instances acting as worker nodes. We will follow the following step in our lab.
 
 **1. Use the command below to create NodeGroup**
 
 ```sh
 eksctl create nodegroup \
---cluster=demo-cluster-1 \
---name=eks-node-group \
---region=ap-southeast-1 \
---node-type=t3.medium \
---managed \
---nodes=2 \
---nodes-min=1 \
---nodes-max=2
+    --cluster=demo-cluster-1 \
+    --name=eks-node-group \
+    --region=ap-southeast-1 \
+    --node-type=t3.medium \
+    --managed \
+    --nodes=2 \
+    --nodes-min=1 \
+    --nodes-max=2 \
+    --node-private-networking
 ```
+
+### Command Breakdown:
+1. **`eksctl create nodegroup`**: This creates a new node group (a collection of EC2 instances) within an existing EKS cluster(`demo-cluster-1`).
+
+2. **`--name=eks-node-group`**: This sets the name of the node group (`eks-node-group`).
+
+3. **`--region=ap-southeast-1`**: This specifies the AWS region (`ap-southeast-1`, Southeast Asia Pacific, Singapore) where both the EKS cluster and the node group will be created.
+
+4. **`--node-type=t3.medium`**: This sets the instance type (`t3.medium`) for the EC2 instances that will be part of this node group.
+
+5. **`--managed`**: This flag specifies that the node group is a "Managed Node Group." Managed node groups are automatically maintained by AWS;
+
+6. **`--nodes=2`**: This specifies that the node group will be created with 2 EC2 instances (nodes) initially.
+
+7. **`--nodes-min=1`**: This sets the minimum number of nodes to 1, meaning the node group will always maintain at least one running node, even if the cluster scales down.
+
+8. **`--nodes-max=2`**: This sets the maximum number of nodes to 2, ensuring that the cluster cannot scale beyond 2 nodes automatically.
+
+9. **`--node-private-networking`**: This ensures that the EC2 instances (nodes) in the node group will only have private IP addresses, meaning they will not be accessible directly from the internet. Instead, they will only communicate within the VPC using private IP addresses, which enhances security. If external communication is needed, it will occur through a `NAT` gateway or other networking solutions.
+
+**Check the command status:**
+
+![alt text](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/image-23.png)
 
 **2. Wait for Completion**
 
 It might take a few minutes for the Node Group to be fully created. You can monitor the progress in the EKS Console. The status of the Node Group will be updated to 'active' once it is fully created.
 
-![](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/image-10.png) -->
+![](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/image-10.png)
 
 
-**1. Navigate to the Amazon EKS Console:**
+<!-- **1. Navigate to the Amazon EKS Console:**
 
 - Open the Amazon EKS Console and select your cluster (`demo-cluster-1`).
 
@@ -219,7 +245,7 @@ It might take a few minutes for the Node Group to be fully created. You can moni
 **5. Wait for Node Group Creation:**
 - Once created, the node group will automatically join the cluster. You can verify this by checking the Nodes section in the EKS Console
 
-  ![](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/image-10.png)
+  ![](https://github.com/Konami33/AWS-EKS-Labs/raw/main/EKS%20Labs/Lab%2004/images/image-10.png) -->
 
 
 ## Step 03: Update kubeconfig to connect to your cluster
