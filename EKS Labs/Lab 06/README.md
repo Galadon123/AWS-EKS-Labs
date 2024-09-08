@@ -14,7 +14,7 @@ In this lab, you will learn how to set up monitoring for an Amazon EKS (Elastic 
 
 Here's how monitoring AWS EKS works:
 
-![alt text](./images/image-23.png)
+![alt text](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2006/images/image-23.png?raw=true)
 
 ## Task 
 In this hands-on lab, we will do the following tasks:
@@ -38,7 +38,7 @@ Run the following command to configure aws cli:
 aws configure
 ```
 
-![alt text](./images/image.png)
+![alt text](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2006/images/image.png?raw=true)
 
 Provide your secret key, secret access key, region etc.
 
@@ -64,7 +64,7 @@ Provide your secret key, secret access key, region etc.
     kubectl version --short --client
     ```
 
-    ![alt text](./images/image-1.png)
+    ![alt text](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2006/images/image-1.png?raw=true)
 
     This command should display the `kubectl` version, confirming that the installation was successful.
 
@@ -92,7 +92,7 @@ Provide your secret key, secret access key, region etc.
 
     This command should display the `eksctl` version, confirming that it’s correctly installed.
 
-    ![alt text](./images/image-2.png)
+    ![alt text](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2006/images/image-2.png?raw=true)
 
 ## Step 4: Install Helm
 
@@ -110,7 +110,7 @@ Helm is a package manager for Kubernetes that simplifies the deployment of appli
     curl -L https://git.io/get_helm.sh | bash -s -- --version v3.8.2
     ```
 
-    ![alt text](./images/image-3.png)
+    ![alt text](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2006/images/image-3.png?raw=true)
 
 2. Verify the installation:
 
@@ -138,11 +138,11 @@ Creating an EKS cluster using `eksctl` streamlines the process by automating the
     - **`--name`**: Specifies the name of the cluster.
     - **`--region`**: Defines the AWS region.
 
-    ![alt text](./images/image-5.png)
+    ![alt text](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2006/images/image-5.png?raw=true)
 
     **Note:** It may take 15–20 minutes for the cluster to be fully operational. You will see the status of the cluster 'Active' once it is fully operational.
 
-    ![alt text](./images/image-8.png)
+    ![alt text](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2006/images/image-8.png?raw=true)
 
 2. Verify the cluster creation in the AWS Console:
 
@@ -155,56 +155,50 @@ Creating an EKS cluster using `eksctl` streamlines the process by automating the
 
 This steps automatically creates necessary VPC, Subnet etc. Here's the resource-map of our VPC. You can see this in AWS Console:
 
-![alt text](./images/image-7.png)
+![alt text](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2006/images/image-7.png?raw=true)
 
 
 
-## Step 6: Create NodeGroup using AWS Console
+## Step 6: Create NodeGroup Using `eksctl`
 
-We will use AWS Management Console to create the NodeGroup for our EKS cluster, follow these steps:
+After creating the EKS cluster, you can add a node group that will consist of EC2 instances acting as worker nodes. We will follow the following step in our lab.
 
-1. **Navigate to the Amazon EKS Console:**
-   - Log in to the AWS Management Console.
-   - Go to the **Amazon EKS** service by searching for "EKS" in the AWS services search bar.
+1. Use the command below to create NodeGroup
 
-2. **Select Your EKS Cluster:**
-   - In the EKS dashboard, select the EKS cluster you created (e.g., `poridhi-cluster`).
+    ```bash
+    eksctl create nodegroup \
+    --cluster=poridhi-cluster \
+    --name=poridhi-nodes \
+    --region=ap-southeast-1 \
+    --node-type=t3.medium \
+    --managed \
+    --nodes=2 \
+    --nodes-min=1 \
+    --nodes-max=2
+    ```
 
-3. **Create a Node Group:**
-   - In the cluster details page, click on the **Compute** tab.
-   - Click on **Add Node Group**.
-   
-4. **Configure the Node Group:**
-   - **Name:** Enter a name for your Node Group (e.g., `poridhi-nodes`).
-   - **Node IAM Role:** Choose or create an IAM role with the necessary permissions for the nodes. If you don’t have one, you can create a new one by clicking on **Create new role**.
-   - **Subnets:** Select the subnets in which you want your nodes to be launched.
-   - **Instance Types:** Choose the EC2 instance type for the nodes (e.g., `t3.medium`).
-   - **Capacity Type:** Select whether you want On-Demand or Spot Instances.
-   - **Scaling Configuration:** Set the desired, minimum, and maximum number of nodes for your Node Group.
+    This command creates a managed node group named `poridhi-nodes` in the `poridhi-cluster` Amazon EKS cluster, located in the `ap-southeast-1` AWS region. The node group uses `t3.medium` EC2 instances, with a desired number of 2 nodes. The node group will automatically scale between a minimum of 1 node and a maximum of 2 nodes based on demand.
 
-5. **Review and Create:**
-   - Review your Node Group configuration.
-   - Click **Create** to start provisioning the Node Group.
+2. Wait for Completion
 
-6. **Wait for Completion:**
-   - It might take a few minutes for the Node Group to be fully created. You can monitor the progress in the EKS Console. The status of the Node Group will be updated to 'active' once it is fully created.
+    It might take a few minutes for the Node Group to be fully created. You can monitor the progress in the EKS Console. The status of the Node Group will be updated to 'active' once it is fully created.
 
-   ![alt text](./images/image-9.png)
+    ![alt text](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2006/images/image-9.png?raw=true)
 
-7. Update the kubeconfig file to interact with the EKS cluster:
+3. Update the kubeconfig file to interact with the EKS cluster:
 
     ```bash
     aws eks update-kubeconfig --name poridhi-cluster --region ap-southeast-1
     ```
 
-8. Confirm the connection to the EKS cluster:
+4. Confirm the connection to the EKS cluster:
 
     ```bash
     kubectl get nodes
     kubectl get ns
     ```
 
-    ![alt text](./images/image-4.png)
+    ![alt text](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2006/images/image-4.png?raw=true)
 
 
     These commands list the worker nodes and namespaces in the cluster.
@@ -253,7 +247,7 @@ Namespaces in Kubernetes provide a way to organize and manage resources within a
     kubectl get ns
     ```
 
-    ![alt text](./images/image-12.png)
+    ![alt text](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2006/images/image-12.png?raw=true)
 
     This command lists all namespaces, including the newly created Prometheus namespace.
 
@@ -271,7 +265,7 @@ Helm simplifies the deployment of Prometheus by using pre-configured charts that
     - **`prometheus-community/kube-prometheus-stack`**: Specifies the chart to be used.
     - **`-n prometheus`**: Specifies the namespace.
 
-    ![alt text](./images/image-13.png)
+    ![alt text](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2006/images/image-13.png?raw=true)
 
 2. Verify the installation:
 
@@ -279,7 +273,7 @@ Helm simplifies the deployment of Prometheus by using pre-configured charts that
     kubectl get pods -n prometheus
     ```
 
-    ![alt text](./images/image-14.png)
+    ![alt text](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2006/images/image-14.png?raw=true)
 
     This command lists all the pods in the Prometheus namespace, confirming that Prometheus is running.
 
@@ -289,7 +283,7 @@ Helm simplifies the deployment of Prometheus by using pre-configured charts that
     kubectl get svc -n prometheus
     ```
 
-    ![alt text](./images/image-15.png)
+    ![alt text](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2006/images/image-15.png?raw=true)
 
     This command lists all the services in the Prometheus namespace, confirming that
 
@@ -321,13 +315,13 @@ By exposing Prometheus and Grafana, you can access them externally for monitorin
     kubectl get svc -n prometheus
     ```
 
-    ![alt text](./images/image-10.png)
+    ![alt text](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2006/images/image-10.png?raw=true)
 
     The `EXTERNAL-IP` will be assigned, which you can use to access Prometheus in a browser.
 
     Open `<EXTERNAL-IP>:9090` for prometheus:
 
-    ![alt text](./images/image-17.png)
+    ![alt text](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2006/images/image-17.png?raw=true)
 
 
 
@@ -352,11 +346,11 @@ By exposing Prometheus and Grafana, you can access them externally for monitorin
     kubectl get svc -n prometheus
     ```
 
-    ![alt text](./images/image-11.png)
+    ![alt text](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2006/images/image-11.png?raw=true)
 
     The `EXTERNAL-IP` will be listed for Grafana, which you can use to access Grafana in a browser.
 
-    ![alt text](./images/image-16.png)
+    ![alt text](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2006/images/image-16.png?raw=true)
 
 
 
@@ -382,17 +376,17 @@ After deploying Grafana to your EKS cluster, you will need the admin password to
 4. **Explore the Grafana Dashboard:**
    - Once logged in, you can start exploring the Grafana dashboards. By default, you may see some predefined dashboards for monitoring Kubernetes, which were set up as part of the Prometheus and Grafana installation. You can also create new dashboards tailored to your needs.
 
-   ![alt text](./images/image-18.png)
+   ![alt text](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2006/images/image-18.png?raw=true)
 
 This step allows you to securely access and manage your Grafana instance, viewing metrics and data visualizations for your Kubernetes environment. If you click any of the names in the dashboards you will see the detailed information. Below are some examples:
 
-![alt text](./images/image-19.png)
+![alt text](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2006/images/image-19.png?raw=true)
 
-![alt text](./images/image-20.png)
+![alt text](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2006/images/image-20.png?raw=true)
 
-![alt text](./images/image-21.png)
+![alt text](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2006/images/image-21.png?raw=true)
 
-![alt text](./images/image-22.png)
+![alt text](https://github.com/Minhaz00/AWS-EKS-Labs/blob/main/EKS%20Labs/Lab%2006/images/image-22.png?raw=true)
 
 
 ## Conclusion
