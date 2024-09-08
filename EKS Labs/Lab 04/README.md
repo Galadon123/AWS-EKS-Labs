@@ -152,7 +152,7 @@ eksctl create cluster \
 
 
 
-## Step 02: Create NodeGroup Using `eksctl`
+## Step 02: Create NodeGroup
 
 <!-- After creating the EKS cluster, you can add a node group that will consist of EC2 instances acting as worker nodes. We will follow the following step in our lab.
 
